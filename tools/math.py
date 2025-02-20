@@ -1,4 +1,7 @@
 from langchain_core.tools import tool
+from collections import namedtuple
+
+# """ => is a doc comment that is needed for the tool functions
 
 @tool
 def add(a, b):
@@ -10,7 +13,10 @@ def add(a, b):
   Returns: number
   """
   print(f"Running add with a: {a}, b: {b}")
-  return a + b
+  result = a + b
+  ToolMessage = namedtuple('ToolMessage', ['content'])
+  tool_msg = ToolMessage(content=str(result))
+  return tool_msg
 
 @tool
 def multiply(a, b):
@@ -22,5 +28,8 @@ def multiply(a, b):
   Returns: number
   """
   print(f"Running multiply with a: {a}, b: {b}")
-  return a * b
+  result = a * b
+  ToolMessage = namedtuple('ToolMessage', ['content'])
+  tool_msg = ToolMessage(content=str(result))
+  return tool_msg
 
