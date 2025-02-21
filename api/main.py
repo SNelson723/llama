@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
 
 from routers import grocery
+from routers import sales
 
 origins = [
   'http://localhost:5173',
@@ -24,3 +25,4 @@ app.add_middleware(
 )
 
 app.include_router(grocery.router)
+app.include_router(sales.router)

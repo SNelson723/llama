@@ -1,6 +1,5 @@
 from langchain_core.tools import tool
 import httpx
-import json
 from collections import namedtuple
 
 @tool
@@ -16,15 +15,13 @@ def sales_fetcher():
   try:
     print(f"Running sales fetcher bitches")
     response = httpx.get("http://127.0.0.1:3054/grocery/orders")
-    print(f"Response: {response}")
-    response.raise_for_status()
-    # return json.dumps(response.json(), indent=2)
-    ToolMessage = namedtuple('ToolMessage', ['content'])
-    tool_msg = ToolMessage(content=response.json())
+    print(f"Response: {response.json()['data']}")
+    ToolMessage = namedtuple('ToolMessage', ['error', 'content'])
+    tool_msg = ToolMessage(error=0, content=response.json()['data'])
     return tool_msg
   except ValueError as e:
     ToolMessage = namedtuple('ToolMessage', ['content'])
-    tool_msg = ToolMessage(content=str(e))
+    tool_msg = ToolMessage(error=1, content=str(e))
     return tool_msg
   
     
